@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\Logger.cs" />
+    <Compile Include="BLL\ReportsBLL.cs" />
+    <Compile Include="DAL\ReportsDAL.cs" />
+    <Compile Include="DAL\SQLHelpers.cs" />
+    <Compile Include="Models.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
