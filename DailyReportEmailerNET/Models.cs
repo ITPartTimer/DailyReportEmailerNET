@@ -37,11 +37,9 @@ namespace DailyReportEmailerNET.Models
     public class BookingsModel
     {
         public int workDy { get; set; }
-        public int prodDt { get; set; }
-        public int swDly { get; set; }
-        public int msDly { get; set; }
-        public int swAve { get; set; }
-        public int msAve { get; set; }
+        public DateTime bookDt { get; set; }
+        public int bookDly { get; set; }
+        public int bookAve { get; set; }
     }
 
     public class ProdModel

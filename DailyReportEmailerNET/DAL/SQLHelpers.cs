@@ -20,8 +20,8 @@ namespace DailyReportEmailerNET.DAL
         {
             get
             {
-                _STRATIXDataConnString = "Data Source=THINKM81\\SQL2014DEV;Initial Catalog=STRATIXData;User ID=ReportRunner;Password=vH1bC1J6W";
-                //_STRATIXDataConnString = "Data Source=VC-030\\SQLDEV2014VC030;Initial Catalog=STRATIXData;User ID=ReportRunner;Password=vH1bC1J6W";
+                //_STRATIXDataConnString = "Data Source=THINKM81\\SQL2014DEV;Initial Catalog=STRATIXData;User ID=ReportRunner;Password=vH1bC1J6W";
+                _STRATIXDataConnString = "Data Source=VC-030\\SQLDEV2014VC030;Initial Catalog=STRATIXData;User ID=ReportRunner;Password=vH1bC1J6W";
 
                 if (string.IsNullOrEmpty(_STRATIXDataConnString))
                 {
