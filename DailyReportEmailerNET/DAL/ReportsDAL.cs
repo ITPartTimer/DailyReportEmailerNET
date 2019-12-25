@@ -63,9 +63,10 @@ namespace DailyReportEmailerNET.DAL
             }
             
             return lst;
-        }     
+        }
         #endregion
 
+        #region Prod
         // ---------------------------------------------------
         // Get Production MTY by PWC
         // ---------------------------------------------------
@@ -104,6 +105,7 @@ namespace DailyReportEmailerNET.DAL
                         p.lbs = (int)rdr["LBS"];
                         p.brks = (int)rdr["BRKS"];
                         p.setUps = (int)rdr["SETUPS"];
+                        p.cuts = (int)rdr["CUTS"];
 
                         pList.Add(p);
                     }
@@ -112,6 +114,61 @@ namespace DailyReportEmailerNET.DAL
             return pList;
         }
 
+        // ---------------------------------------------------
+        // Get Yesterday Production by PWC
+        // ---------------------------------------------------
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<JobDetailModel> LKU_Prod_Yesterday_ByPWC(string pwc)
+        {
+            List<JobDetailModel> pList = new List<JobDetailModel>();
+
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader rdr = default(SqlDataReader);
+
+            SqlConnection conn = new SqlConnection(STRATIXDataConnString);
+
+            using (conn)
+            {
+                conn.Open();
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ST_PROD_LKU_proc_Jobs_Yesterday_byPWC";
+                cmd.Connection = conn;
+
+                AddParamToSQLCmd(cmd, "@pwc", SqlDbType.VarChar, 3, ParameterDirection.Input, pwc);
+
+                rdr = cmd.ExecuteReader();
+
+                using (rdr)
+                {
+                    while (rdr.Read())
+                    {
+                        JobDetailModel p = new JobDetailModel();
+ 
+                        p.pwc = (string)rdr["PWC"];
+                        p.Dt = (DateTime)rdr["DT"];
+                        p.job = (int)rdr["JOB"];
+                        p.lbs = (int)rdr["LBS"];
+                        p.ft = (int)rdr["FT"];
+                        p.brks = (int)rdr["BRKS"];
+                        p.setUps = (int)rdr["SETUPS"];
+                        p.cuts = (int)rdr["CUTS"];
+                        p.arbIn = (int)rdr["ARBIN"];
+                        p.frm = rdr["FRM"].ToString();
+                        p.grd = rdr["GRD"].ToString();
+                        p.fnsh = rdr["FNSH"].ToString();
+                        p.gauge = (decimal)rdr["GAUGE"];
+                        p.wdth = (decimal)rdr["WDTH"];
+
+                        pList.Add(p);
+                    }
+                }
+            }
+            return pList;
+        }
+        #endregion
+
+        #region Book
         // ---------------------------------------------------
         // Return Bookings MTY
         // ---------------------------------------------------
@@ -154,6 +211,7 @@ namespace DailyReportEmailerNET.DAL
             }
             return lst;
         }
+        #endregion
 
         // ---------------------------------------------------
         // Return Active PWC by Brh

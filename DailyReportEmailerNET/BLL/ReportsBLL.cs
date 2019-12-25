@@ -28,6 +28,7 @@ namespace DailyReportEmailerNET.BLL
         }
         #endregion      
 
+        #region Prod
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProdModel> Get_Prod_ByPWC(string pwc)
         {
@@ -41,6 +42,20 @@ namespace DailyReportEmailerNET.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<JobDetailModel> Get_Prod_Yesterday_ByPWC(string pwc)
+        {
+            ReportsDAL obj = new ReportsDAL();
+
+            List<JobDetailModel> pList = new List<JobDetailModel>();
+
+            pList = obj.LKU_Prod_Yesterday_ByPWC(pwc);
+
+            return pList;
+        }
+        #endregion
+
+        #region Book
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<BookingsModel> Get_Bookings_MTY_ByBrh(string brh)
         {
             ReportsDAL obj = new ReportsDAL();
@@ -51,7 +66,9 @@ namespace DailyReportEmailerNET.BLL
 
             return lst;
         }
+        #endregion
 
+        
         // Return list of PWC by Brh
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<string> Get_PWC_ByBrh(string brh)
@@ -64,5 +81,6 @@ namespace DailyReportEmailerNET.BLL
 
             return pwcList;
         }
+        
     }
 }

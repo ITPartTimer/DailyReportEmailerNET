@@ -51,7 +51,24 @@ namespace DailyReportEmailerNET.Models
         public int lbs { get; set; }
         public int brks { get; set; }
         public int setUps { get; set; }
+        public int cuts { get; set; }
     }
 
-
+    public class JobDetailModel
+    {       
+        public string pwc { get; set; }
+        public DateTime Dt { get; set; }
+        public int job { get; set; }
+        public int lbs { get; set; }
+        public int ft { get; set; }
+        public int brks { get; set; }
+        public int setUps { get; set; }
+        public int cuts { get; set; }
+        public int arbIn { get; set; }
+        public string frm { get; set; }
+        public string grd { get; set; }
+        public string fnsh { get; set; }
+        public decimal gauge { get; set; }
+        public decimal wdth { get; set; }
+    }
 }

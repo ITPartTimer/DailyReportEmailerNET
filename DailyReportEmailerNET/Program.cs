@@ -181,13 +181,13 @@ namespace DailyReportEmailerNET
 
                             return;
                         }
-
+                     
                         // Loop through each record and add the XLS
                         foreach (ProdModel p in pwcProdList)
                         {
                             // PWC is a string so it needs double single quotes.
                             // Do this by adding a "'" on both sides of the property
-                            cmdText = "Insert into [" + pwc + @"$] (WORK_DY,PROD_DT,PWC,JOBS,LBS,BRKS,SETUPS) Values(" + p.workDy.ToString() + "," + p.prodDt.ToString() + "," + "'" + p.pwc + "'" + "," + p.jobs.ToString() + "," + p.lbs.ToString() + "," + p.brks.ToString() + "," + p.setUps.ToString() + ");";
+                            cmdText = "Insert into [" + pwc + @"$] (WORK_DY,PROD_DT,PWC,JOBS,LBS,BRKS,SETUPS,CUTS) Values(" + p.workDy.ToString() + "," + p.prodDt.ToString() + "," + "'" + p.pwc + "'" + "," + p.jobs.ToString() + "," + p.lbs.ToString() + "," + p.brks.ToString() + "," + p.setUps.ToString() + "," + p.cuts.ToString() + ");";
 
                             eCmd.CommandText = cmdText;
 
@@ -195,6 +195,38 @@ namespace DailyReportEmailerNET
 
                             eCmd.ExecuteNonQuery();
                         }
+
+                        List<JobDetailModel> jobDetailList = new List<JobDetailModel>();
+
+                        // Only add detail for SLT PWCs
+                        if ((pwc != "CTL") || (pwc != "MSB"))
+                        {
+                            try
+                            {
+                                jobDetailList = objProd.Get_Prod_Yesterday_ByPWC(pwc);
+                            }
+                            catch (Exception ex)
+                            {
+                                logMsgs.Add("Get_Prod_Yesterday_ByPWC Exception:");
+                                logMsgs.Add(ex.Message.ToString());
+                                Logger.Log(logMsgs);
+
+                                return;
+                            }
+
+                            // Loop through each record and add the XLS
+                            foreach (ProdModel p in pwcProdList)
+                            {
+                                // Use parameters to insert into XLS
+                                cmdText = "Insert into [" + pwc + @"$] (PWC,JOB,LBS,BRKS,SETUPS,CUTS,ARBIN,FRM,GRD,FNSH,GAUGE,WDTH) Values(" + p.workDy.ToString() + "," + p.prodDt.ToString() + "," + "'" + p.pwc + "'" + "," + p.jobs.ToString() + "," + p.lbs.ToString() + "," + p.brks.ToString() + "," + p.setUps.ToString() + "," + p.cuts.ToString() + ");";
+
+                                eCmd.CommandText = cmdText;
+
+                                Console.WriteLine("Detail: " + cmdText);
+
+                                eCmd.ExecuteNonQuery();
+                            }
+                        } // if
                     }
                 }
                 catch (Exception ex)
