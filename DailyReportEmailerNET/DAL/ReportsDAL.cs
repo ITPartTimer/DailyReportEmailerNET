@@ -153,7 +153,7 @@ namespace DailyReportEmailerNET.DAL
                         p.brks = (int)rdr["BRKS"];
                         p.setUps = (int)rdr["SETUPS"];
                         p.cuts = (int)rdr["CUTS"];
-                        p.arbIn = (int)rdr["ARBIN"];
+                        p.arbIn = (decimal)rdr["ARBIN"];
                         p.frm = rdr["FRM"].ToString();
                         p.grd = rdr["GRD"].ToString();
                         p.fnsh = rdr["FNSH"].ToString();

@@ -64,7 +64,7 @@ namespace DailyReportEmailerNET.Models
         public int brks { get; set; }
         public int setUps { get; set; }
         public int cuts { get; set; }
-        public int arbIn { get; set; }
+        public decimal arbIn { get; set; }
         public string frm { get; set; }
         public string grd { get; set; }
         public string fnsh { get; set; }

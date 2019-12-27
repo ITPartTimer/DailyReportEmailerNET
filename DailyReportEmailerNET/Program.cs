@@ -151,7 +151,7 @@ namespace DailyReportEmailerNET
 
                         eCmd.CommandText = cmdText;
 
-                        Console.WriteLine(cmdText);
+                        Console.WriteLine("Book: " + cmdText);
                       
                         eCmd.ExecuteNonQuery();
                     }
@@ -191,7 +191,7 @@ namespace DailyReportEmailerNET
 
                             eCmd.CommandText = cmdText;
 
-                            Console.WriteLine("Loop: " + cmdText);
+                            Console.WriteLine("Prod: " + cmdText);
 
                             eCmd.ExecuteNonQuery();
                         }
@@ -214,17 +214,35 @@ namespace DailyReportEmailerNET
                                 return;
                             }
 
-                            // Loop through each record and add the XLS
-                            foreach (ProdModel p in pwcProdList)
+                            // Loop through each record and add yesterday details to XLS
+                            foreach (JobDetailModel d in jobDetailList)
                             {
                                 // Use parameters to insert into XLS
-                                cmdText = "Insert into [" + pwc + @"$] (PWC,JOB,LBS,BRKS,SETUPS,CUTS,ARBIN,FRM,GRD,FNSH,GAUGE,WDTH) Values(" + p.workDy.ToString() + "," + p.prodDt.ToString() + "," + "'" + p.pwc + "'" + "," + p.jobs.ToString() + "," + p.lbs.ToString() + "," + p.brks.ToString() + "," + p.setUps.ToString() + "," + p.cuts.ToString() + ");";
+                                cmdText = "Insert into [YESTERDAY$] (PWC,JOB,LBS,BRKS,SETUPS,CUTS,ARBIN,FRM,GRD,FNSH,GAUGE,WDTH)" +
+                                    "Values(@pwc, @job, @lbs, @brks, @setups, @cuts, @arbin, @frm, @grd, @fnsh, @gauge, @wdth)";
 
                                 eCmd.CommandText = cmdText;
-
-                                Console.WriteLine("Detail: " + cmdText);
+                               
+                                eCmd.Parameters.AddRange(new OleDbParameter[]
+                                {
+                                    new OleDbParameter("@pwc", d.pwc),
+                                    new OleDbParameter("@job", d.job.ToString()),
+                                    new OleDbParameter("@lbs", d.lbs.ToString()),
+                                    new OleDbParameter("@brks", d.brks.ToString()),
+                                    new OleDbParameter("@setups", d.setUps.ToString()),
+                                    new OleDbParameter("@cuts", d.cuts.ToString()),
+                                    new OleDbParameter("@arbin", d.arbIn.ToString()),
+                                    new OleDbParameter("@frm", d.frm),
+                                    new OleDbParameter("@grd", d.grd),
+                                    new OleDbParameter("@fnsh", d.fnsh),
+                                    new OleDbParameter("@gauge", d.gauge.ToString()),
+                                    new OleDbParameter("@pwdth", d.wdth.ToString())
+                                });
 
                                 eCmd.ExecuteNonQuery();
+
+                                // Need to clear Parameters on each pass
+                                eCmd.Parameters.Clear();
                             }
                         } // if
                     }
