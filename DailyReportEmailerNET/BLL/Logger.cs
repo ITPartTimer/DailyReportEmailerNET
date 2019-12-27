@@ -18,7 +18,7 @@ namespace DailyReportEmailerNET.BLL
 
             using (StreamWriter writer = new StreamWriter(ReportPath, true))
             {
-                writer.WriteLine("------------------------------");
+                writer.WriteLine("-------- DailyReportMailerNET --------");
                 writer.WriteLine("Date: " + DateTime.Now.ToString());
 
                 foreach(string m in msgs)

@@ -269,7 +269,7 @@ namespace DailyReportEmailerNET
 
                 mail.From = new MailAddress("sclemons@calstripsteel.com");
                 mail.Subject = brh + " - Daily Reports";
-                mail.Body = "Daily Bookings and Production attached";
+                mail.Body = "Report attached";
 
                 //Build To: line from emails in list of EmployeesReportsModel
                 foreach (EmployeesReportsModel e in empRptList)
@@ -300,8 +300,8 @@ namespace DailyReportEmailerNET
             #endregion
 
             // testing only to stop application so I can read the console
-            Console.WriteLine("Press key to exit");
-            Console.ReadKey();
+            //Console.WriteLine("Press key to exit");
+            //Console.ReadKey();
         }
     }
 }
